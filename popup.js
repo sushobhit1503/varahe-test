@@ -1,5 +1,7 @@
-let scrapeEmails = document.getElementById("scrapeEmails")
 let list = document.getElementById("emailList")
+let sortButton = document.getElementById("sortEmails")
+let sortOrder = 1
+let sortInfo = document.getElementById("sort-info")
 
 chrome.runtime.onMessage.addListener((request, sender, senderResponse) => {
     let emails = request.emails
@@ -25,10 +27,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
 })
 
+sortButton.addEventListener("click", () => {
+    let sortedEmail = Array.from(list.getElementsByTagName("li"));
+
+    sortedEmail.sort((a, b) => {
+        let emailA = a.innerText.toLowerCase();
+        let emailB = b.innerText.toLowerCase();
+        return sortOrder * emailA.localeCompare(emailB);
+    });
+
+    list.innerHTML = "";
+
+    sortedEmail.map(item => {
+        list.appendChild(item);
+    });
+   
+    if (sortOrder === 1) {
+        sortInfo.innerText = "Email Id is sorted in A to Z order"
+    }
+    else {
+        sortInfo.innerText = "Email Id is sorted in Z to A order"
+    }
+    sortOrder *= -1;
+})
+
 const scrapeEmailsFromPage = () => {
     const emailRegEx = /[\w\.=-]+@[\w\.-]+\.[\w]{2,3}/gim;
-
     let emails = document.body.innerHTML.match(emailRegEx)
-
     chrome.runtime.sendMessage({ emails })
 }
