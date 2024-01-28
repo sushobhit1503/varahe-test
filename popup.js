@@ -1,7 +1,9 @@
 let list = document.getElementById("emailList")
 let sortButton = document.getElementById("sortEmails")
+let filterButton = document.getElementById("filterEmails")
 let sortOrder = 1
 let sortInfo = document.getElementById("sort-info")
+var inputValue = ""
 
 chrome.runtime.onMessage.addListener((request, sender, senderResponse) => {
     let emails = request.emails
@@ -38,8 +40,8 @@ sortButton.addEventListener("click", () => {
 
     list.innerHTML = "";
 
-    sortedEmail.map(item => {
-        list.appendChild(item);
+    sortedEmail.map(eachEmail => {
+        list.appendChild(eachEmail);
     });
    
     if (sortOrder === 1) {
@@ -49,6 +51,24 @@ sortButton.addEventListener("click", () => {
         sortInfo.innerText = "Email Id is sorted in Z to A order"
     }
     sortOrder *= -1;
+})
+
+document.getElementById("filterSearch").addEventListener ("input", () => {
+    inputValue = document.getElementById("filterSearch").value
+})
+
+filterButton.addEventListener("click", () => {
+    let filterValue = inputValue.toLowerCase();
+    let filteredEmails = Array.from(list.getElementsByTagName("li"));
+
+    filteredEmails.map(eachEmail => {
+        let email = eachEmail.innerText.toLowerCase();
+        if (email.includes(filterValue)) {
+            eachEmail.style.display = "block";
+        } else {
+            eachEmail.style.display = "none";
+        }
+    });
 })
 
 const scrapeEmailsFromPage = () => {
