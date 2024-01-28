@@ -1,0 +1,8 @@
+.email-list {
+    list-style: none;
+}
+
+body {
+    width: max-content;
+    padding: 1rem;
+}
