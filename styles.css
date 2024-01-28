@@ -1,8 +1,37 @@
-.email-list {
-    list-style: none;
+body {
+    min-width: 300px;
 }
 
-body {
-    width: max-content;
-    padding: 1rem;
+ol {
+    list-style: none;
+    padding-left: 0.5rem;
+}
+
+li {
+    margin-bottom: 0.25rem;
+}
+
+button {
+    border: none;
+    outline: none;
+    padding: 0.5rem 1rem;
+    background-color: #0F9D58;
+    border-radius: 0.25rem;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+input {
+    outline: none;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    margin-right: 1rem;
 }
